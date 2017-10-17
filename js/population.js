@@ -4,12 +4,14 @@ export class Population {
     this.alive = alive;
     this.infected = 1;
     this.dead = dead;
+    this.spread = 1;
   }
 
   gameOver() {
-    if (this.population === 0){
+    if (this.population <= 0){
+      clearInterval();
       return true;
-    }
+      }
     return false;
   }
 
@@ -22,10 +24,18 @@ export class Population {
   }
 
   setSpread() {
-    this.infected = Math.ceil(((this.infected * 1.4) + 1));
+    this.infected = Math.floor(((this.infected * this.spread) + 1));
   }
 
   setDead() {
-    this.dead = this.infected * 0.8;
+    this.dead = Math.ceil(this.infected * 0.8);
+  }
+
+  setSpreadUp() {
+    this.spread = parseFloat(this.spread + 0.1);
+  }
+
+  setSpreadDown() {
+    this.spread = (this.spread - (0.1)).toFixed(2);
   }
 }
